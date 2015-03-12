@@ -235,13 +235,11 @@ def main():
             if not replica in replicas:
                 sendError("unknown replica: " + replica)
             if replica in triggered_reps:
-                pt_rep.append(replica)
-            elif len(pt_rep) == 0:
-                pending_reps[replica] = True
-            if len(pt_rep) > 0:
-                # Has pre-triggered replicas.
-                sendCmd("CHANGES", pt_rep)
+                # Is pre-triggered replica.
+                sendCmd("CHANGES", replica)
                 pending_reps = {}
+            else:
+                pending_reps[replica] = True
             _debug_triggers()
         elif cmd == "CHANGES":
             # Get pending replicas.
