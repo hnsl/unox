@@ -215,24 +215,29 @@ def main():
     while True:
         [cmd, args] = recvCmd();
         # Cancel pending waits when any other command is received.
-        pending_reps = {}
+        if cmd != "WAIT":
+            pending_reps = {}
         # Check command.
         if cmd == "DEBUG":
             _in_debug = True
         elif cmd == "START":
             # Start observing replica.
-            [replica, fspath, path] = args
+            if len(args) >= 3:
+                [replica, fspath, path] = args
+            else:
+                # No path, only monitoring fspath.
+                [replica, fspath] = args
+                path = ""
             startReplicaMon(replica, fspath, path)
         elif cmd == "WAIT":
-            # Start waiting for one or more replicas.
-            pt_rep = []
-            for replica in args:
-                if not replica in replicas:
-                    sendError("unknown replica: " + replica)
-                if replica in triggered_reps:
-                    pt_rep.append(replica)
-                elif len(pt_rep) == 0:
-                    pending_reps[replica] = True
+            # Start waiting for another replica.
+            [replica] = args
+            if not replica in replicas:
+                sendError("unknown replica: " + replica)
+            if replica in triggered_reps:
+                pt_rep.append(replica)
+            elif len(pt_rep) == 0:
+                pending_reps[replica] = True
             if len(pt_rep) > 0:
                 # Has pre-triggered replicas.
                 sendCmd("CHANGES", pt_rep)
@@ -252,7 +257,8 @@ def main():
             # Stop observing replica.
             [replica] = args
             if not replica in replicas:
-                sendError("unknown replica: " + replica)
+                warn("unknown replica: " + replica)
+                continue
             stream = replicas[replica]["stream"]
             if stream is not None:
                 observer.unschedule(stream)
