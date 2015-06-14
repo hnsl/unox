@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # unox
+#
 #
 # Author: Hannes Landeholm <hannes@jumpstarter.io>
 #
@@ -21,10 +22,19 @@
 import sys
 import os
 import time
-import fsevents
-import urllib.parse
+import urllib
 import traceback
 
+try:
+    import fsevents
+except ImportError as exc:
+    if "No module" in str(exc):
+        print "!!Missing module fsevents install with $sudo easy_install pip ; pip install macfsevents "        
+        print "!!Under XCode 5.1 install with $sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install macfsevents " 
+        raise
+    else:
+        pass
+        
 my_log_prefix = "[unox]"
 
 _in_debug = "--debug" in sys.argv
@@ -75,7 +85,7 @@ def warn(msg):
 def sendCmd(cmd, args):
     raw_cmd = cmd
     for arg in args:
-        raw_cmd += " " + urllib.parse.quote(arg);
+         raw_cmd += " " + urllib.quote(arg);
     if _in_debug: _debug("sendCmd: " + raw_cmd)
     sys.stdout.write(raw_cmd + "\n")
 
@@ -105,7 +115,7 @@ def recvCmd():
     words = line.strip().split(" ")
     args = []
     for word in words[1:]:
-        args.append(urllib.parse.unquote(word))
+        args.append(urllib.unquote(word))
     return [words[0], args]
 
 def pathTokenize(path):
