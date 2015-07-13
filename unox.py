@@ -180,7 +180,7 @@ def startReplicaMon(replica, fspath, path):
         replicas[replica] = {
             "stream": stream,
             "fspath": fspath
-    }
+    	}
     sendAck()
     while True:
         [cmd, args] = recvCmd();
