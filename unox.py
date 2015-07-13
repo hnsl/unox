@@ -2,7 +2,6 @@
 #
 # unox
 #
-#
 # Author: Hannes Landeholm <hannes@jumpstarter.io>
 #
 # The Unison beta (2.48) comes with file system change monitoring (repeat = watch)
@@ -15,26 +14,17 @@
 # and is intended to be installed as unison-fsmonitor in the PATH in OS X. This is the
 # missing puzzle piece for repeat = watch support for Unison in in OS X.
 #
-# Dependencies: pip3 install macfsevents
+# Dependencies: pip install macfsevents
 #
 # Licence: MPLv2 (https://www.mozilla.org/MPL/2.0/)
 
 import sys
 import os
 import time
+import fsevents
 import urllib
 import traceback
 
-try:
-    import fsevents
-except ImportError as exc:
-    if "No module" in str(exc):
-        print "!!Missing module fsevents install with $sudo easy_install pip ; pip install macfsevents "        
-        print "!!Under XCode 5.1 install with $sudo ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install macfsevents " 
-        raise
-    else:
-        pass
-        
 my_log_prefix = "[unox]"
 
 _in_debug = "--debug" in sys.argv
@@ -85,7 +75,7 @@ def warn(msg):
 def sendCmd(cmd, args):
     raw_cmd = cmd
     for arg in args:
-         raw_cmd += " " + urllib.quote(arg);
+        raw_cmd += " " + urllib.quote(arg);
     if _in_debug: _debug("sendCmd: " + raw_cmd)
     sys.stdout.write(raw_cmd + "\n")
 
@@ -190,7 +180,7 @@ def startReplicaMon(replica, fspath, path):
         replicas[replica] = {
             "stream": stream,
             "fspath": fspath
-        }
+    }
     sendAck()
     while True:
         [cmd, args] = recvCmd();
