@@ -99,7 +99,7 @@ def recvCmd():
     if not line.endswith("\n"):
         # End of stream means we're done.
         if _in_debug: _debug("stdin closed, exiting")
-        exit(0)
+        sys.exit(0)
     if _in_debug: _debug("recvCmd: " + line)
     # Parse cmd and args. Args are url encoded.
     words = line.strip().split(" ")
