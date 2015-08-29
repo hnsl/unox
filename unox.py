@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # unox
 #
@@ -14,7 +14,7 @@
 # and is intended to be installed as unison-fsmonitor in the PATH in OS X. This is the
 # missing puzzle piece for repeat = watch support for Unison in in OS X.
 #
-# Dependencies: pip3 install macfsevents
+# Dependencies: pip install macfsevents
 #
 # Licence: MPLv2 (https://www.mozilla.org/MPL/2.0/)
 
@@ -22,7 +22,7 @@ import sys
 import os
 import time
 import fsevents
-import urllib.parse
+import urllib
 import traceback
 
 my_log_prefix = "[unox]"
@@ -75,7 +75,7 @@ def warn(msg):
 def sendCmd(cmd, args):
     raw_cmd = cmd
     for arg in args:
-        raw_cmd += " " + urllib.parse.quote(arg);
+        raw_cmd += " " + urllib.quote(arg);
     if _in_debug: _debug("sendCmd: " + raw_cmd)
     sys.stdout.write(raw_cmd + "\n")
 
@@ -99,13 +99,13 @@ def recvCmd():
     if not line.endswith("\n"):
         # End of stream means we're done.
         if _in_debug: _debug("stdin closed, exiting")
-        exit(0)
+        sys.exit(0)
     if _in_debug: _debug("recvCmd: " + line)
     # Parse cmd and args. Args are url encoded.
     words = line.strip().split(" ")
     args = []
     for word in words[1:]:
-        args.append(urllib.parse.unquote(word))
+        args.append(urllib.unquote(word))
     return [words[0], args]
 
 def pathTokenize(path):
@@ -180,7 +180,7 @@ def startReplicaMon(replica, fspath, path):
         replicas[replica] = {
             "stream": stream,
             "fspath": fspath
-        }
+    	}
     sendAck()
     while True:
         [cmd, args] = recvCmd();
