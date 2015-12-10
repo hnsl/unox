@@ -12,6 +12,8 @@ This script implements the Unison fswatch protocol (see `/src/fswatch.ml`)
 and is intended to be installed as unison-fsmonitor in the PATH in OS X. This is the
 missing puzzle piece for repeat = watch support for Unison in in OS X.
 
+Example installation: sudo ln -s ~/unox/unox.py /usr/bin/unison-fsmonitor 
+
 Dependencies: sudo pip install macfsevents
 
 Licence: MPLv2 (https://www.mozilla.org/MPL/2.0/)
