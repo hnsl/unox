@@ -1,6 +1,6 @@
 ## unox
 
-Author: Hannes Landeholm <hannes@jumpstarter.io>
+Author: Hannes Landeholm <hannes.landeholm@gmail.com>
 
 The Unison beta (2.48) comes with file system change monitoring (repeat = watch)
 through an abstract "unison-fsmonitor" adapter that integrates with each respective
