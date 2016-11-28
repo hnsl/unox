@@ -24,6 +24,12 @@ import time
 import fsevents
 import urllib
 import traceback
+import signal
+
+def sigint_handler(signal, frame):
+  sys.exit(0)
+
+signal.signal(signal.SIGINT, sigint_handler)
 
 my_log_prefix = "[unox]"
 
@@ -180,7 +186,7 @@ def startReplicaMon(replica, fspath, path):
         replicas[replica] = {
             "stream": stream,
             "fspath": fspath
-    	}
+        }
     sendAck()
     while True:
         [cmd, args] = recvCmd();
