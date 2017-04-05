@@ -18,6 +18,6 @@ Example installation:
 For El Captain, unison is installed in /usr/local/bin:
 `sudo ln -s ~/unox/unox.py /usr/local/bin/unison-fsmonitor`
 
-Dependencies: sudo pip install macfsevents
+Dependencies: sudo pip install watchdog
 
 Licence: MPLv2 (https://www.mozilla.org/MPL/2.0/)
