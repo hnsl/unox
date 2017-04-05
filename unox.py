@@ -2,7 +2,7 @@
 #
 # unox
 #
-# Author: Hannes Landeholm <hannes@jumpstarter.io>
+# Author: Hannes Landeholm <hannes.landeholm@gmail.com>
 #
 # The Unison beta (2.48) comes with file system change monitoring (repeat = watch)
 # through an abstract "unison-fsmonitor" adapter that integrates with each respective
@@ -25,6 +25,12 @@ import urllib
 import traceback
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+import signal
+
+def sigint_handler(signal, frame):
+  sys.exit(0)
+
+signal.signal(signal.SIGINT, sigint_handler)
 
 my_log_prefix = "[unox]"
 
