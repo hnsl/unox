@@ -33,7 +33,8 @@ else:
 
 
 def sigint_handler(signal, frame):
-  sys.exit(0)
+    sys.exit(0)
+
 
 signal.signal(signal.SIGINT, sigint_handler)
 
@@ -52,11 +53,12 @@ replicas = {}
 
 # Dict of pending replicas that are beeing waited on.
 # Replica hash mapped to True if replica is pending.
-pending_reps =  {}
+pending_reps = {}
 
 # Dict of triggered replicas.
 # Replica hash mapped to recursive dict where keys are path tokens or True for pending leaf.
 triggered_reps = {}
+
 
 def format_exception(e):
     # Thanks for not bundling this function in the Python library Guido. *facepalm*
@@ -69,6 +71,7 @@ def format_exception(e):
     exception_str = exception_str[:-1]
     return exception_str
 
+
 def _debug_triggers():
     global pending_reps, triggered_reps
     if not _in_debug_plus:
@@ -78,11 +81,14 @@ def _debug_triggers():
         wait_info = " | wait=" + str(pending_reps)
     sys.stderr.write(my_log_prefix + "[DEBUG+]: trig=" + str(triggered_reps) + wait_info + "\n")
 
+
 def _debug(msg):
     sys.stderr.write(my_log_prefix + "[DEBUG]: " + msg.strip() + "\n")
 
+
 def warn(msg):
     sys.stderr.write(my_log_prefix + "[WARN]: " + msg.strip() + "\n")
+
 
 def sendCmd(cmd, args):
     raw_cmd = cmd
@@ -91,17 +97,21 @@ def sendCmd(cmd, args):
     if _in_debug: _debug("sendCmd: " + raw_cmd)
     sys.stdout.write(raw_cmd + "\n")
 
+
 # Safely injects a command to send from non-receive context.
 def injectCmd(cmd, args):
     sendCmd(cmd, args)
     sys.stdout.flush()
 
+
 def sendAck():
     sendCmd("OK", [])
+
 
 def sendError(msg):
     sendCmd("ERROR", [msg])
     os._exit(1)
+
 
 def recvCmd():
     # We flush before stalling on read instead of
@@ -124,12 +134,14 @@ def recvCmd():
         args.append(unquote(word))
     return [words[0], args]
 
+
 def pathTokenize(path):
     path_toks = []
     for path_tok in path.split("/"):
         if len(path_tok) > 0:
             path_toks.append(path_tok)
     return path_toks
+
 
 def triggerReplica(replica, local_path_toks):
     global pending_reps, triggered_reps
@@ -218,12 +230,14 @@ def startReplicaMon(replica, fspath, path):
         else:
             sendError("unexpected cmd in replica start: " + cmd)
 
+
 def reportRecursiveChanges(local_path, cur_lvl):
     if (cur_lvl == True):
         sendCmd("RECURSIVE", [local_path])
         return
     for path_tok, new_lvl in cur_lvl.items():
         reportRecursiveChanges(os.path.join(local_path, path_tok), new_lvl);
+
 
 def main():
     global replicas, pending_reps, triggered_reps
@@ -291,6 +305,7 @@ def main():
             _debug_triggers()
         else:
             sendError("unexpected root cmd: " + cmd)
+
 
 if __name__ == '__main__':
     try:
