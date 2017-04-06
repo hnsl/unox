@@ -20,12 +20,17 @@
 
 import sys
 import os
-import time
-import urllib
 import traceback
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import signal
+
+# Import depending on python version
+if sys.version_info.major < 3:
+    from urllib import quote, unquote
+else:
+    from urllib.parse import quote, unquote
+
 
 def sigint_handler(signal, frame):
   sys.exit(0)
@@ -82,7 +87,7 @@ def warn(msg):
 def sendCmd(cmd, args):
     raw_cmd = cmd
     for arg in args:
-        raw_cmd += " " + urllib.quote(arg);
+        raw_cmd += " " + quote(arg);
     if _in_debug: _debug("sendCmd: " + raw_cmd)
     sys.stdout.write(raw_cmd + "\n")
 
@@ -116,7 +121,7 @@ def recvCmd():
     words = line.strip().split(" ")
     args = []
     for word in words[1:]:
-        args.append(urllib.unquote(word))
+        args.append(unquote(word))
     return [words[0], args]
 
 def pathTokenize(path):
