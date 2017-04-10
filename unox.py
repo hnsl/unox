@@ -211,7 +211,7 @@ def startReplicaMon(replica, fspath, path):
             # and compare against a snapshot. This means there's no point in us doing it, better leave it to Unison.
             if _in_debug: _debug("replica:[" + replica + "] watching path [" + fspath + "]")
             handler = Handler(fspath, replica)
-            watch = observer.schedule(handler, fspath)
+            watch = observer.schedule(handler, fspath, recursive=True)
         except Exception as e:
             sendError(str(e))
         replicas[replica] = {
