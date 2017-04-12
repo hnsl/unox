@@ -240,7 +240,7 @@ def reportRecursiveChanges(local_path, cur_lvl):
 
 
 def main():
-    global replicas, pending_reps, triggered_reps
+    global replicas, pending_reps, triggered_reps, _in_debug
     # Version handshake.
     sendCmd("VERSION", ["1"])
     [cmd, args] = recvCmd();
