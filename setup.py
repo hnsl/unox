@@ -70,11 +70,8 @@ setup(
     # this:
     py_modules=["unox"],
 
-    # List run-time dependencies here.  These will be installed by pip when
-    # your project is installed. For an analysis of "install_requires" vs pip's
-    # requirements files see:
-    # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['watchdog'],
+    # we need to install pathtools since watchdog depends on it but did not define the dep
+    install_requires=['watchdog pathtools'],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
