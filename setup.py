@@ -71,7 +71,7 @@ setup(
     py_modules=["unox"],
 
     # we need to install pathtools since watchdog depends on it but did not define the dep
-    install_requires=['watchdog pathtools'],
+    install_requires=['watchdog','pathtools'],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
