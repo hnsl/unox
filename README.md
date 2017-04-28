@@ -21,7 +21,7 @@ missing puzzle piece for repeat = watch support for Unison in in OS X.
 ```
 git clone https://github.com/hnsl/unox
 cd unox
-pip install
+pip install .
 ```
 
 ### License
