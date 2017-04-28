@@ -13,8 +13,8 @@ and is intended to be installed as `unison-fsmonitor` in the PATH in OS X. This 
 missing puzzle piece for repeat = watch support for Unison in in OS X.
 
 ### Installation view homebrew
-    
-    brew tap eugenmaer/dockersync
+
+    brew tap eugenmayer/dockersync
     brew install eugenmayer/dockersync/unox
 
 ### Manual installation:
