@@ -1,5 +1,8 @@
-## unox
+## UPGRADE / BREAKING CHANGE!
+With version 0.2 the layout of the reppo has changed to merge the setuptools standard. This way pip install now is working, including homebrew.
+If you have used the old repo layout in automation, you will need to either switch to homebrew / pip install ( both recommanded ) or change the src of your symlink to `src/unox/unox.py`. It does though not make a lot of sense still doing it the old way - it is not supported and will probably break in the future anyway.
 
+## unox
 Author: Hannes Landeholm <hannes.landeholm@gmail.com>
 
 The Unison beta (2.48) comes with file system change monitoring (repeat = watch)
