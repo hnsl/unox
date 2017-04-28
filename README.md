@@ -12,18 +12,17 @@ This script implements the Unison fswatch protocol (see `/src/fswatch.ml`)
 and is intended to be installed as `unison-fsmonitor` in the PATH in OS X. This is the
 missing puzzle piece for repeat = watch support for Unison in in OS X.
 
-### Installation view homebrew
+### Installation via homebrew
 
     brew tap eugenmayer/dockersync
     brew install eugenmayer/dockersync/unox
 
 ### Manual installation:
-`sudo ln -s ~/unox/unox.py /usr/bin/unison-fsmonitor`
-
-For El Captain, unison is installed in /usr/local/bin:
-`sudo ln -s ~/unox/unox.py /usr/local/bin/unison-fsmonitor`
-
-Dependencies: sudo pip install watchdog
+```
+git clone https://github.com/hnsl/unox
+cd unox
+pip install
+```
 
 ### License
 
